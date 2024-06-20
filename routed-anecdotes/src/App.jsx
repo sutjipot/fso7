@@ -9,6 +9,8 @@ import { AnecdoteList } from './components/AnecdoteList'
 import { Footer } from './components/Footer'
 import { CreateNew } from './components/CreateNew'
 import { Menu } from './components/Menu'
+import { Anecdote } from './components/Anecdote'
+
 
 
 const App = () => {
@@ -56,6 +58,7 @@ const App = () => {
       <Menu />
       <Routes>
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
+        <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes} />} />
         <Route path="/create" element={<CreateNew addNew={addNew} />} />
         <Route path="/about" element={<About />} />
       </Routes>
