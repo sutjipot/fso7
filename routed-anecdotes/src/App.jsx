@@ -1,6 +1,6 @@
 import {
   BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route, Link, useNavigate, useMatch
 } from 'react-router-dom'
 
 import { useState } from 'react'
@@ -34,8 +34,21 @@ const App = () => {
   const [notification, setNotification] = useState('')
 
   const addNew = (anecdote) => {
-    anecdote.id = Math.round(Math.random() * 10000)
-    setAnecdotes(anecdotes.concat(anecdote))
+
+      if (anecdote.author && anecdote.content && anecdote.info) {
+        anecdote.id = Math.round(Math.random() * 10000)
+        setAnecdotes(anecdotes.concat(anecdote))
+        notif(`New anecdote added: ${anecdote.content}`)
+      } else {
+        notif('All fields must be filled')
+      }
+  }
+
+  const notif = (message) => {
+    setNotification(message)
+    setTimeout(() => {
+      setNotification('')
+    }, 5000)
   }
 
   const anecdoteById = (id) =>
@@ -56,6 +69,7 @@ const App = () => {
     <Router>
       <h1>Software anecdotes</h1>
       <Menu />
+      <p> {notification} </p>
       <Routes>
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
         <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes} />} />
